@@ -8,6 +8,7 @@ const PieChart_Container = styled.div`
   width: 50%;
   min-height: 400px;
   height: fit-content;
+  padding-top: 20px;
 
   @media (max-width: 768px) {
     width: 100%;
