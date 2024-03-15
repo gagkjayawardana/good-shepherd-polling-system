@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { VoteData } from './voteData';
+import dayjs from 'dayjs';
 
 const PieChart_Container = styled.div`
   width: 50%;
@@ -13,6 +14,11 @@ const PieChart_Container = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
+`;
+
+const Display_Winner = styled.div`
+  text-align: center;
+  padding-bottom: 20px;
 `;
 
 function ResultChart() {
@@ -36,6 +42,21 @@ function ResultChart() {
   ];
 
   const HouseColors = ['#ff0000', '#800080', '#ffff00', '#008000'];
+
+  let greatestVote = '';
+  let greatestCount = 0;
+
+  for (const [vote, count] of Object.entries(values)) {
+    if (count > greatestCount) {
+      greatestCount = count;
+      greatestVote = vote;
+    }
+  }
+
+  const targetTime = dayjs('2024-03-14 17:00:00');
+  const currentTime = dayjs();
+
+  const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -76,6 +97,16 @@ function ResultChart() {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
+      {endTimeGreaterThanCurrent === false && (
+        <Display_Winner>
+          <Typography variant="h6" gutterBottom>
+            Winner
+          </Typography>
+          <Typography variant="h4" gutterBottom>
+            {greatestVote}
+          </Typography>
+        </Display_Winner>
+      )}
     </PieChart_Container>
   );
 }

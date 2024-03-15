@@ -19,10 +19,11 @@ const Home_Container = styled.div`
 `;
 
 function Home() {
+  const endTime = localStorage.getItem('endTime');
   return (
     <Home_Page>
       <div className="homePoll">
-        <VoteTime targetDate="2024-03-17T12:00:00Z" />
+        <VoteTime targetDate={endTime} />
         <Home_Container>
           <Poll />
           <PieChart />

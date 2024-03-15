@@ -45,6 +45,12 @@ function VoteTime({ targetDate }) {
       seconds
     };
   }
+
+  const targetTime = dayjs(targetDate);
+  const currentTime = dayjs();
+
+  const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);
+
   return (
     <Time_Container>
       <Typography variant="h6" gutterBottom>
@@ -54,15 +60,24 @@ function VoteTime({ targetDate }) {
         <Typography variant="h7" gutterBottom>
           Remaining Time:
         </Typography>
-        <Typography
-          sx={{ color: '#000099', marginTop: '-6px', marginLeft: '10px' }}
-          variant="h5"
-          gutterBottom>
-          {String(remainingTime.days).padStart(2, '0')} :{' '}
-          {String(remainingTime.hours).padStart(2, '0')} :{' '}
-          {String(remainingTime.minutes).padStart(2, '0')} :{' '}
-          {String(remainingTime.seconds).padStart(2, '0')}
-        </Typography>
+        {endTimeGreaterThanCurrent === true ? (
+          <Typography
+            sx={{ color: '#000099', marginTop: '-6px', marginLeft: '10px' }}
+            variant="h5"
+            gutterBottom>
+            {String(remainingTime.days).padStart(2, '0')} :{' '}
+            {String(remainingTime.hours).padStart(2, '0')} :{' '}
+            {String(remainingTime.minutes).padStart(2, '0')} :{' '}
+            {String(remainingTime.seconds).padStart(2, '0')}
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ color: '#000099', marginTop: '-6px', marginLeft: '10px' }}
+            variant="h5"
+            gutterBottom>
+            00 : 00 : 00 : 00
+          </Typography>
+        )}
       </Remaining_Time>
     </Time_Container>
   );

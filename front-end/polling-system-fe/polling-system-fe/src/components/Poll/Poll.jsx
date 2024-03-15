@@ -6,6 +6,7 @@ import Popover from '@mui/material/Popover';
 import TextField from '@mui/material/TextField';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import dayjs from 'dayjs';
 
 const Poll_Container = styled.div`
   width: 50%;
@@ -52,6 +53,11 @@ function Poll() {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
+  const targetTime = dayjs('2024-03-14 17:00:00');
+  const currentTime = dayjs();
+
+  const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);
 
   const pollPopover = () => {
     const initialValues = {
@@ -165,6 +171,7 @@ function Poll() {
           }}
           value="Roses"
           onClick={handleClick}
+          disabled={endTimeGreaterThanCurrent === false}
           variant="contained">
           Roses
         </Button>
@@ -181,6 +188,7 @@ function Poll() {
           }}
           value="Violets"
           onClick={handleClick}
+          disabled={endTimeGreaterThanCurrent === false}
           variant="contained">
           Violets
         </Button>
@@ -197,6 +205,7 @@ function Poll() {
           }}
           value="Marguerites"
           onClick={handleClick}
+          disabled={endTimeGreaterThanCurrent === false}
           variant="contained">
           Marguerites
         </Button>
@@ -213,6 +222,7 @@ function Poll() {
           }}
           value="Lilies"
           onClick={handleClick}
+          disabled={endTimeGreaterThanCurrent === false}
           variant="contained">
           Lilies
         </Button>
