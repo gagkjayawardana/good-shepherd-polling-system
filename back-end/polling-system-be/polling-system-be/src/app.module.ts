@@ -5,12 +5,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { Vote } from './vote/entities/vote.entity';
+import { VoteModule } from './vote/vote.module';
+import { Event } from './event/entities/event.entity';
+import { EventModule } from './event/event.module';
 
 dotenv.config();
 
 @Module({
   imports: [
     UserModule,
+    VoteModule,
+    EventModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -18,7 +24,7 @@ dotenv.config();
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
+      entities: [User, Vote, Event],
       synchronize: true,
     }),
   ],
