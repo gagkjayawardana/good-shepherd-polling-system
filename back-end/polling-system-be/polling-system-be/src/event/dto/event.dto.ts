@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty } from 'class-validator';
+import { IsDateString, IsEnum, IsNotEmpty } from 'class-validator';
 
 export class AddEventDto {
   @IsNotEmpty()
@@ -8,4 +8,19 @@ export class AddEventDto {
   @IsNotEmpty()
   @IsDateString()
   endTime: Date;
+
+  @IsEnum(['yes', 'no'])
+  vote: string;
+}
+
+export class UpdateEventDto {
+  @IsDateString()
+  startTimet: Date;
+
+  @IsDateString()
+  endTime: Date;
+
+  @IsNotEmpty()
+  @IsEnum(['yes', 'no'])
+  vote: string;
 }

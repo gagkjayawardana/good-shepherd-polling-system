@@ -7,6 +7,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum ResultStatusType {
+  YES = 'yes',
+  NO = 'no',
+}
+
 @Entity()
 export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -19,4 +24,11 @@ export class Event extends BaseEntity {
   @Column()
   @UpdateDateColumn()
   endTime: Date;
+
+  @Column({
+    type: 'enum',
+    enum: ResultStatusType,
+    default: ResultStatusType.YES,
+  })
+  resultStatus: ResultStatusType;
 }
