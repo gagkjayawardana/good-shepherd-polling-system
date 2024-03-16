@@ -9,6 +9,9 @@ import dayjs from 'dayjs';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { logoutUserAction, refreshAction } from '../../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Admin_Page = styled.div`
   width: 100%;
@@ -83,6 +86,16 @@ const Admin_Header = styled.div`
 `;
 
 function AdminPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutFunction = () => {
+    dispatch(logoutUserAction({ navigate }));
+  };
+
+  useEffect(() => {
+    dispatch(refreshAction());
+  }, []);
+
   const [startDateValue, setStartDateValue] = useState(null);
   const [startTimeValue, setStartTimeValue] = useState(null);
   const [endDateValue, setEndDateValue] = useState(null);
@@ -267,6 +280,7 @@ function AdminPage() {
               backgroundColor: '#8080ff'
             }
           }}
+          onClick={logoutFunction}
           variant="contained"
           size="medium">
           Sign Out

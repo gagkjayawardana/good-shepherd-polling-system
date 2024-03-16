@@ -34,14 +34,14 @@ export class UserService {
         userName: userData.userName,
       });
       if (!findUser) {
-        console.log('User Not Found');
+        return { err: 'User not found' };
       } else {
         const checkPassword = await bcrypt.compare(
           userData.password,
           findUser.password,
         );
         if (!checkPassword) {
-          console.log('Password Not Match');
+          return { err: 'Password not match' };
         } else {
           return findUser;
         }
@@ -51,11 +51,14 @@ export class UserService {
     }
   }
 
-  createToken(user: UserInterface) {
+  async createToken(user: UserInterface) {
     try {
+      const findUser = await this.userRepository.findOneBy({
+        userName: user.userName,
+      });
       const secret = config.jwt_secret_key;
       const tokenData = {
-        email: user.email,
+        email: findUser.email,
         role: user.role,
       };
       return {
@@ -106,7 +109,7 @@ export class UserService {
         config.jwt_secret_key,
       ) as JwtPayload;
       if (!verifyAccToken) {
-        console.log('Unauthorized');
+        return { err: 'Unauthorized' };
       } else {
         const userEmail = verifyAccToken.email;
         const findUser = await this.userRepository.findOneBy({
