@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EventInterface } from './interfaces/event.interface';
 import { Event } from './entities/event.entity';
-import { AddEventDto } from './dto/event.dto';
+import { AddEventDto, UpdateEventDto } from './dto/event.dto';
 import { Vote } from 'src/vote/entities/vote.entity';
 import { VoteInterface } from 'src/vote/interfaces/vote.interface';
 
@@ -48,6 +48,22 @@ export class EventService {
       };
     } catch (err) {
       return { err: 'Deleting error' };
+    }
+  }
+
+  async updateStstusService(body: UpdateEventDto) {
+    try {
+      const event = await this.eventRepository.findOne({
+        order: {
+          eventId: 'DESC',
+        },
+      });
+      if (event) {
+        this.eventRepository.merge(event, body);
+        return await this.eventRepository.save(event);
+      }
+    } catch (err) {
+      return { err: 'Status not changed' };
     }
   }
 }

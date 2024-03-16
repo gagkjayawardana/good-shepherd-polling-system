@@ -5,11 +5,12 @@ import {
   Get,
   Inject,
   Post,
+  Put,
   Res,
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Response } from 'express';
-import { AddEventDto } from './dto/event.dto';
+import { AddEventDto, UpdateEventDto } from './dto/event.dto';
 
 @Controller('vote')
 export class EventController {
@@ -45,6 +46,17 @@ export class EventController {
   async deleteStudent(@Res() res: Response) {
     try {
       const result = await this.eventService.deleteEventService();
+      res.status(200);
+      res.json(result);
+    } catch (err) {
+      res.status(400);
+    }
+  }
+
+  @Put('/status')
+  async updateStatus(@Body() newStatus: UpdateEventDto, @Res() res: Response) {
+    try {
+      const result = await this.eventService.updateStstusService(newStatus);
       res.status(200);
       res.json(result);
     } catch (err) {
