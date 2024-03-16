@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../redux/user/userSlice';
 
 const Login_Page = styled.div`
   width: 100%;
@@ -43,6 +45,7 @@ const LogErrMsg = styled.span`
 
 function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     userName: '',
@@ -56,12 +59,7 @@ function LoginPage() {
     const userName = data.userName;
     const password = data.password;
 
-    console.log('userName ', userName);
-    console.log('Password ', password);
-
-    if (userName && password) {
-      navigate('/admin');
-    }
+    dispatch(loginUserAction({ userName, password, navigate }));
   };
   return (
     <Login_Page>

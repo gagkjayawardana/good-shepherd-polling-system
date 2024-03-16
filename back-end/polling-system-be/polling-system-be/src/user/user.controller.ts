@@ -30,7 +30,6 @@ export class UserController {
 
   @Post('/login')
   async loginUser(@Body() userData: LoginUserDto, @Res() res: Response) {
-    console.log('cookies ', res.cookie);
     try {
       const { userName, password } = userData;
 
@@ -39,12 +38,12 @@ export class UserController {
         password,
       });
       if (!('err' in user)) {
-        const newToken = this.userService.createToken(user);
+        const newToken = await this.userService.createToken(user);
         res.cookie('accessToken', newToken.newAccessToken, {
           maxAge: 60 * 60 * 1000,
           httpOnly: true,
         });
-        res.cookie('refreshToken', newToken.newAccessToken, {
+        res.cookie('refreshToken', newToken.newRefreshToken, {
           maxAge: 60 * 60 * 24 * 1000,
           httpOnly: true,
         });
@@ -95,7 +94,6 @@ export class UserController {
   async refreshUser(@Req() req: Request, @Res() res: Response) {
     try {
       const refToken = req.cookies.refreshToken;
-      console.log('refroken, ', refToken);
       const userToken = await this.userService.refreshService(refToken);
       if (userToken) {
         res.cookie('accessToken', userToken.newAccessToken, {

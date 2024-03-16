@@ -3,8 +3,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import AdminPage from './pages/Admin/Admin';
 import LoginPage from './pages/Login/Login';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserAction } from './redux/user/userSlice';
+import PrivateRoutes from './utils/privateRoutes';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserAction());
+  }, []);
   return (
     <>
       <CssBaseline />
@@ -13,7 +21,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>
