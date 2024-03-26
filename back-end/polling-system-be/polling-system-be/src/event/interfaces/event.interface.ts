@@ -1,6 +1,6 @@
 export interface EventInterface {
   eventId: number;
-  startTime: Date;
+  startTimet: Date;
   endTime: Date;
   resultStatus: string;
 }

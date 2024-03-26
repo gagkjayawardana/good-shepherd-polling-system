@@ -12,15 +12,15 @@ import { EventService } from './event.service';
 import { Response } from 'express';
 import { AddEventDto, UpdateEventDto } from './dto/event.dto';
 
-@Controller('vote')
+@Controller('event')
 export class EventController {
   constructor(
     @Inject('EVENT_SERVICE')
     private readonly eventService: EventService,
   ) {}
 
-  @Post()
-  async addVote(@Body() newEvent: AddEventDto, @Res() res: Response) {
+  @Post('/createEvent')
+  async addEvent(@Body() newEvent: AddEventDto, @Res() res: Response) {
     try {
       const event = await this.eventService.createEventService(newEvent);
       res.status(200);

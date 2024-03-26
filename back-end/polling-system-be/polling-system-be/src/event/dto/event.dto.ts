@@ -8,19 +8,10 @@ export class AddEventDto {
   @IsNotEmpty()
   @IsDateString()
   endTime: Date;
-
-  @IsEnum(['yes', 'no'])
-  vote: string;
 }
 
 export class UpdateEventDto {
-  @IsDateString()
-  startTimet: Date;
-
-  @IsDateString()
-  endTime: Date;
-
   @IsNotEmpty()
   @IsEnum(['yes', 'no'])
-  vote: string;
+  resultStatus: string;
 }

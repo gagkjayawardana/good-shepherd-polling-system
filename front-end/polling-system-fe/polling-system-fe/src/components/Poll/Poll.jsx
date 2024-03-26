@@ -7,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+import { selectEvent } from '../../redux/event/eventSlice';
 
 const Poll_Container = styled.div`
   width: 50%;
@@ -54,7 +56,9 @@ function Poll() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const targetTime = dayjs('2024-03-14 17:00:00');
+  const event = useSelector(selectEvent);
+
+  const targetTime = dayjs(event.endTime);
   const currentTime = dayjs();
 
   const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);

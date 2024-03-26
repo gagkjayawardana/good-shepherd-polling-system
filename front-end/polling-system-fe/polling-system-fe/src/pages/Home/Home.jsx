@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Poll from '../../components/Poll/Poll';
 import PieChart from '../../components/PieChart/PieChart';
 import VoteTime from '../../components/Time/VoteTime';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEventAction, selectEvent } from '../../redux/event/eventSlice';
 
 const Home_Page = styled.div`
   width: 100%;
@@ -19,7 +21,13 @@ const Home_Container = styled.div`
 `;
 
 function Home() {
-  const endTime = localStorage.getItem('endTime');
+  const dispatch = useDispatch();
+  const event = useSelector(selectEvent);
+  const endTime = event.endTime;
+
+  useEffect(() => {
+    dispatch(getEventAction());
+  }, []);
   return (
     <Home_Page>
       <div className="homePoll">

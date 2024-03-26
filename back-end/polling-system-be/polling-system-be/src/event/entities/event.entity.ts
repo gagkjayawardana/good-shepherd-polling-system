@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  BaseEntity,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 export enum ResultStatusType {
   YES = 'yes',
@@ -18,11 +11,9 @@ export class Event extends BaseEntity {
   eventId: number;
 
   @Column()
-  @CreateDateColumn()
   startTimet: Date;
 
   @Column()
-  @UpdateDateColumn()
   endTime: Date;
 
   @Column({
