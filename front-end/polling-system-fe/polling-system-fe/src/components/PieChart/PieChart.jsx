@@ -4,6 +4,8 @@ import Typography from '@mui/material/Typography';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { VoteData } from './voteData';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+import { selectEvent } from '../../redux/event/eventSlice';
 
 const PieChart_Container = styled.div`
   width: 50%;
@@ -22,6 +24,7 @@ const Display_Winner = styled.div`
 `;
 
 function ResultChart() {
+  const event = useSelector(selectEvent);
   const initialCounts = {
     Roses: 0,
     Violets: 0,
@@ -53,7 +56,7 @@ function ResultChart() {
     }
   }
 
-  const targetTime = dayjs('2024-03-14 17:00:00');
+  const targetTime = dayjs(event.endTime);
   const currentTime = dayjs();
 
   const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);
@@ -80,24 +83,34 @@ function ResultChart() {
       <Typography sx={{ textAlign: 'center' }} variant="h4" gutterBottom>
         Check Your House
       </Typography>
-      <ResponsiveContainer width="100%" height={400}>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="45%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={150}
-            fill="#8884d8"
-            dataKey="value">
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={HouseColors[index % HouseColors.length]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-      {endTimeGreaterThanCurrent === false && (
+      {event.resultStatus === 'yes' ? (
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="45%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={150}
+              fill="#8884d8"
+              dataKey="value">
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={HouseColors[index % HouseColors.length]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <Typography
+          sx={{ color: '#000099', textAlign: 'center', marginTop: '50px', marginBottom: '50px' }}
+          variant="h5"
+          gutterBottom>
+          {`Who's going to win?`} <br />
+          Vote and take your house to Victory
+        </Typography>
+      )}
+      {event.endTime && endTimeGreaterThanCurrent === false && (
         <Display_Winner>
           <Typography variant="h6" gutterBottom>
             Winner

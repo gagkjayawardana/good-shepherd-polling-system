@@ -9,9 +9,15 @@ import dayjs from 'dayjs';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserAction, refreshAction } from '../../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import {
+  createEventAction,
+  deleteEventAction,
+  selectEvent,
+  updateEventAction
+} from '../../redux/event/eventSlice';
 
 const Admin_Page = styled.div`
   width: 100%;
@@ -85,9 +91,21 @@ const Admin_Header = styled.div`
   padding-left: 20px;
 `;
 
+const Show_Times = styled.div`
+  color: #000099;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 20px;
+`;
+
 function AdminPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const event = useSelector(selectEvent);
+
+  const eventStart = dayjs(event.startTimet).format('YYYY-MM-DD HH:mm:ss');
+  const eventEnd = dayjs(event.endTime).format('YYYY-MM-DD HH:mm:ss');
+
   const logoutFunction = () => {
     dispatch(logoutUserAction({ navigate }));
   };
@@ -102,15 +120,14 @@ function AdminPage() {
   const [endTimeValue, setEndTimeValue] = useState(null);
 
   const submitTimes = () => {
-    if ((startTimeValue, endTimeValue)) {
+    if (startTimeValue && endTimeValue) {
       const start = dayjs(startTimeValue.$d);
       const end = dayjs(endTimeValue.$d);
 
-      const startTime = start.format('YYYY-MM-DD HH:mm:ss');
+      const startTimet = start.format('YYYY-MM-DD HH:mm:ss');
       const endTime = end.format('YYYY-MM-DD HH:mm:ss');
 
-      localStorage.setItem('startTime', startTime);
-      localStorage.setItem('endTime', endTime);
+      dispatch(createEventAction({ startTimet, endTime }));
     } else {
       alert('Please select start and end time');
     }
@@ -177,18 +194,21 @@ function AdminPage() {
   };
 
   const DisplayResults = () => {
+    const event = useSelector(selectEvent);
     const [, setDisplayResults] = useState('yes');
 
     const showResults = (e) => {
-      const value = e.currentTarget.value;
-      setDisplayResults(value);
-      localStorage.setItem('displayResults', value);
+      const resultStatus = e.currentTarget.value;
+      setDisplayResults(resultStatus);
+      dispatch(updateEventAction({ resultStatus }));
     };
 
     useEffect(() => {
-      const savedDisplayResults = localStorage.getItem('displayResults');
-      if (savedDisplayResults) {
-        setDisplayResults(savedDisplayResults);
+      if (event) {
+        const savedDisplayResults = event.resultStatus;
+        if (savedDisplayResults) {
+          setDisplayResults(savedDisplayResults);
+        }
       }
     }, []);
 
@@ -237,6 +257,9 @@ function AdminPage() {
     );
   };
   const ResetData = () => {
+    const deleteRecords = () => {
+      dispatch(deleteEventAction());
+    };
     return (
       <Reset_Data>
         <Typography variant="h4" gutterBottom>
@@ -258,7 +281,7 @@ function AdminPage() {
                 marginLeft: '0'
               }
             }}
-            value="yes"
+            onClick={deleteRecords}
             variant="contained">
             Yes
           </Button>
@@ -319,6 +342,24 @@ function AdminPage() {
             Submit
           </Button>
         </Admin_Time>
+        <Show_Times>
+          <Typography variant="h6" gutterBottom>
+            Start Time
+          </Typography>
+          {event && (
+            <Typography variant="h4" gutterBottom>
+              {eventStart}
+            </Typography>
+          )}
+          <Typography variant="h6" gutterBottom>
+            End Time
+          </Typography>
+          {event && (
+            <Typography variant="h4" gutterBottom>
+              {eventEnd}
+            </Typography>
+          )}
+        </Show_Times>
 
         <>{DisplayResults()}</>
         <>{ResetData()}</>

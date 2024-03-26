@@ -27,11 +27,11 @@ export class EventService {
 
   async getLastEventService() {
     try {
-      const lastEvent = await this.eventRepository.findOne({
-        order: {
-          eventId: 'DESC',
-        },
-      });
+      const lastEvent = await this.eventRepository
+        .createQueryBuilder('event')
+        .orderBy('event.eventId', 'DESC')
+        .take(1)
+        .getOne();
       return lastEvent;
     } catch (err) {
       return { err: 'Cannot find event' };
@@ -51,15 +51,33 @@ export class EventService {
     }
   }
 
+  // async updateStstusService(body: UpdateEventDto) {
+  //   try {
+  //     const event = await this.eventRepository
+  //       .createQueryBuilder('event')
+  //       .orderBy('event.eventId', 'DESC')
+  //       .take(1)
+  //       .getOne();
+
+  //     if (event) {
+  //       this.eventRepository.merge(event, body);
+  //       return await this.eventRepository.save(event);
+  //     }
+  //   } catch (err) {
+  //     return { err: 'Status not changed' };
+  //   }
+  // }
+
   async updateStstusService(body: UpdateEventDto) {
     try {
-      const event = await this.eventRepository.findOne({
-        order: {
-          eventId: 'DESC',
-        },
-      });
+      const event = await this.eventRepository
+        .createQueryBuilder('event')
+        .orderBy('event.eventId', 'DESC')
+        .take(1)
+        .getOne();
+
       if (event) {
-        this.eventRepository.merge(event, body);
+        event.resultStatus = body.resultStatus; // Update only the resultStatus
         return await this.eventRepository.save(event);
       }
     } catch (err) {
