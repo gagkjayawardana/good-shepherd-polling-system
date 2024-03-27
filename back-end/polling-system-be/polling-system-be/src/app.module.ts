@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +9,10 @@ import { Vote } from './vote/entities/vote.entity';
 import { VoteModule } from './vote/vote.module';
 import { Event } from './event/entities/event.entity';
 import { EventModule } from './event/event.module';
+import {
+  AdminPermission,
+  VerifyLogout,
+} from './middleware/authGuards.middleware';
 
 dotenv.config();
 
@@ -31,4 +35,19 @@ dotenv.config();
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(VerifyLogout)
+      .forRoutes({ path: 'user/logout', method: RequestMethod.GET });
+    consumer
+      .apply(AdminPermission)
+      .forRoutes({ path: 'event/createEvent', method: RequestMethod.POST });
+    consumer
+      .apply(AdminPermission)
+      .forRoutes({ path: 'event/status', method: RequestMethod.PUT });
+    consumer
+      .apply(AdminPermission)
+      .forRoutes({ path: 'event', method: RequestMethod.DELETE });
+  }
+}
