@@ -31,7 +31,7 @@ function Home() {
   return (
     <Home_Page>
       <div className="homePoll">
-        <VoteTime targetDate={endTime} />
+        {endTime && <VoteTime targetDate={endTime} />}
         <Home_Container>
           <Poll />
           <PieChart />

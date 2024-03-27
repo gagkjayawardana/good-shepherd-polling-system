@@ -8,12 +8,14 @@ import { useDispatch } from 'react-redux';
 import { getUserAction } from './redux/user/userSlice';
 import PrivateRoutes from './utils/privateRoutes';
 import { getEventAction } from './redux/event/eventSlice';
+import { getVotesAction } from './redux/vote/voteSlice';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserAction());
     dispatch(getEventAction());
+    dispatch(getVotesAction());
   }, []);
   return (
     <>

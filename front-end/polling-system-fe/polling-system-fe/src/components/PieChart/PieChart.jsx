@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { VoteData } from './voteData';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { selectEvent } from '../../redux/event/eventSlice';
+import { selectVotes } from '../../redux/vote/voteSlice';
 
 const PieChart_Container = styled.div`
   width: 50%;
@@ -25,6 +25,8 @@ const Display_Winner = styled.div`
 
 function ResultChart() {
   const event = useSelector(selectEvent);
+  const voteData = useSelector(selectVotes);
+
   const initialCounts = {
     Roses: 0,
     Violets: 0,
@@ -32,10 +34,13 @@ function ResultChart() {
     Lilies: 0
   };
 
-  const values = VoteData.reduce((accumulator, currentValue) => {
-    accumulator[currentValue.vote]++;
-    return accumulator;
-  }, initialCounts);
+  let values = { ...initialCounts };
+  if (Array.isArray(voteData)) {
+    values = voteData.reduce((accumulator, currentValue) => {
+      accumulator[currentValue.vote]++;
+      return accumulator;
+    }, initialCounts);
+  }
 
   const data = [
     { name: 'Roses', value: values.Roses },

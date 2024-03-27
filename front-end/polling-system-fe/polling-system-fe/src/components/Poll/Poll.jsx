@@ -7,8 +7,9 @@ import TextField from '@mui/material/TextField';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectEvent } from '../../redux/event/eventSlice';
+import { addVoteAction } from '../../redux/vote/voteSlice';
 
 const Poll_Container = styled.div`
   width: 50%;
@@ -63,6 +64,8 @@ function Poll() {
 
   const endTimeGreaterThanCurrent = targetTime.isAfter(currentTime);
 
+  const dispatch = useDispatch();
+
   const pollPopover = () => {
     const initialValues = {
       firstName: '',
@@ -80,7 +83,8 @@ function Poll() {
       const email = data.email.toLowerCase();
       const vote = pollValue;
 
-      console.log('submit ', firstName, lastName, email, vote);
+      dispatch(addVoteAction({ firstName, lastName, email, vote }));
+      setAnchorEl(null);
 
       data.firstName = '';
       data.lastName = '';
@@ -175,7 +179,7 @@ function Poll() {
           }}
           value="Roses"
           onClick={handleClick}
-          disabled={endTimeGreaterThanCurrent === false}
+          disabled={!event.endTime || endTimeGreaterThanCurrent === false}
           variant="contained">
           Roses
         </Button>
@@ -192,7 +196,7 @@ function Poll() {
           }}
           value="Violets"
           onClick={handleClick}
-          disabled={endTimeGreaterThanCurrent === false}
+          disabled={!event.endTime || endTimeGreaterThanCurrent === false}
           variant="contained">
           Violets
         </Button>
@@ -209,7 +213,7 @@ function Poll() {
           }}
           value="Marguerites"
           onClick={handleClick}
-          disabled={endTimeGreaterThanCurrent === false}
+          disabled={!event.endTime || endTimeGreaterThanCurrent === false}
           variant="contained">
           Marguerites
         </Button>
@@ -226,7 +230,7 @@ function Poll() {
           }}
           value="Lilies"
           onClick={handleClick}
-          disabled={endTimeGreaterThanCurrent === false}
+          disabled={!event.endTime || endTimeGreaterThanCurrent === false}
           variant="contained">
           Lilies
         </Button>
