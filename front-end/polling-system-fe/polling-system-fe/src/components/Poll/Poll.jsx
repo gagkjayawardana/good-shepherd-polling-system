@@ -90,6 +90,7 @@ function Poll() {
       data.lastName = '';
       data.email = '';
     };
+
     return (
       <Popover
         id={id}
