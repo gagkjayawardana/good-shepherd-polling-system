@@ -346,17 +346,25 @@ function AdminPage() {
           <Typography variant="h6" gutterBottom>
             Start Time
           </Typography>
-          {event && (
+          {event.endTime ? (
             <Typography variant="h4" gutterBottom>
               {eventStart}
+            </Typography>
+          ) : (
+            <Typography variant="h4" gutterBottom>
+              YYYY-MM-DD HH:mm:ss
             </Typography>
           )}
           <Typography variant="h6" gutterBottom>
             End Time
           </Typography>
-          {event && (
+          {event.endTime ? (
             <Typography variant="h4" gutterBottom>
               {eventEnd}
+            </Typography>
+          ) : (
+            <Typography variant="h4" gutterBottom>
+              YYYY-MM-DD HH:mm:ss
             </Typography>
           )}
         </Show_Times>

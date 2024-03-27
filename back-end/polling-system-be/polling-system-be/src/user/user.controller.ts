@@ -52,6 +52,10 @@ export class UserController {
         res.json(user);
 
         return;
+      } else {
+        res.status(400);
+        res.json(user);
+        return;
       }
     } catch (err) {
       res.status(400);

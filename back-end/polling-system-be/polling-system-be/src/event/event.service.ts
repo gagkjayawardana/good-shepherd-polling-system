@@ -51,23 +51,6 @@ export class EventService {
     }
   }
 
-  // async updateStstusService(body: UpdateEventDto) {
-  //   try {
-  //     const event = await this.eventRepository
-  //       .createQueryBuilder('event')
-  //       .orderBy('event.eventId', 'DESC')
-  //       .take(1)
-  //       .getOne();
-
-  //     if (event) {
-  //       this.eventRepository.merge(event, body);
-  //       return await this.eventRepository.save(event);
-  //     }
-  //   } catch (err) {
-  //     return { err: 'Status not changed' };
-  //   }
-  // }
-
   async updateStstusService(body: UpdateEventDto) {
     try {
       const event = await this.eventRepository
@@ -77,7 +60,7 @@ export class EventService {
         .getOne();
 
       if (event) {
-        event.resultStatus = body.resultStatus; // Update only the resultStatus
+        event.resultStatus = body.resultStatus;
         return await this.eventRepository.save(event);
       }
     } catch (err) {

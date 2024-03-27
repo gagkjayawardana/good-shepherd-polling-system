@@ -12,6 +12,7 @@ import {
   saveEventAction,
   updateEventAction
 } from './eventSlice';
+import { saveVoteAction } from '../vote/voteSlice';
 
 function* createEventGenerator({ payload }) {
   try {
@@ -50,7 +51,8 @@ function* deleteEventGenerator() {
   try {
     const response = yield call(deleteEventService);
     if (response) {
-      yield put(saveEventAction(response));
+      yield put(saveEventAction(response.data));
+      yield put(saveVoteAction(response.data));
     }
   } catch (err) {
     alert('Event not deleted');
