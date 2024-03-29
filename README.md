@@ -12,6 +12,14 @@ Before you begin, ensure you have the following installed:
 
 - **main:** The default branch. It represents the stable version of the code.
 
+
+- **back-end/**: Root folder for the back-end code.
+    - **polling-system-be/**: Main folder for the polling system back-end.
+        - **polling-system-be/**: Source code directory containing the back-end files.
+            - **[source code files and directories]**: Actual source code files and directories.
+           
+
+
 ## Getting Started
 
 To get started with the Good Shepherd Media Club Polling System, follow these steps:
