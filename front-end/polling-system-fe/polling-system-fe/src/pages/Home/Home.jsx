@@ -5,6 +5,8 @@ import PieChart from '../../components/PieChart/PieChart';
 import VoteTime from '../../components/Time/VoteTime';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventAction, selectEvent } from '../../redux/event/eventSlice';
+import Header from '../../Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const Home_Page = styled.div`
   width: 100%;
@@ -14,6 +16,7 @@ const Home_Page = styled.div`
 
 const Home_Container = styled.div`
   display: flex;
+  padding-top: 20px;
 
   @media (max-width: 768px) {
     display: block;
@@ -31,11 +34,13 @@ function Home() {
   return (
     <Home_Page>
       <div className="homePoll">
+        <Header />
         {endTime && <VoteTime targetDate={endTime} />}
         <Home_Container>
           <Poll />
           <PieChart />
         </Home_Container>
+        <Footer />
       </div>
     </Home_Page>
   );
