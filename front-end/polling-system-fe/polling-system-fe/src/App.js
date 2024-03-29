@@ -29,7 +29,6 @@ function App() {
     });
 
     socket.on('vote_added', () => {
-      // alert(data);
       dispatch(getVotesAction());
     });
 
