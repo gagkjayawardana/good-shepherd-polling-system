@@ -12,18 +12,20 @@ Before you begin, ensure you have the following installed:
 
 - **main:** The default branch. It represents the stable version of the code.
 
-## Getting Started Back-End
+## Getting Started
 
-To get started with the Apple House Back-End, follow these steps:
+To get started with the Good Shepherd Media Club Polling System, follow these steps:
 
 1. Clone the repository:
 
-   https://github.com/gagkjayawardana/apple-house-back-end.git
+   https://github.com/gagkjayawardana/good-shepherd-polling-system.git
 
-2. Install dependencies:
+### To get started with the Apple House Back-End, follow these steps:
+
+1. Install dependencies:
 
    npm i -g @nestjs/cli
 
-3. Start the nodemon server:
+2. Start the nodemon server:
 
    npm run start:dev
