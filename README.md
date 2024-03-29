@@ -20,7 +20,17 @@ To get started with the Good Shepherd Media Club Polling System, follow these st
 
    https://github.com/gagkjayawardana/good-shepherd-polling-system.git
 
-### To get started with the Apple House Back-End, follow these steps:
+   ### To get started with the Good Shepherd Media Club Polling System Front-End, follow these steps:
+   
+   1. Install dependencies:
+
+   npm install
+
+2. Start the development server:
+
+   npm start
+
+### To get started with the Good Shepherd Media Club Polling System Back-End, follow these steps:
 
 1. Install dependencies:
 
@@ -29,3 +39,4 @@ To get started with the Good Shepherd Media Club Polling System, follow these st
 2. Start the nodemon server:
 
    npm run start:dev
+
