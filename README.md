@@ -20,9 +20,9 @@ To get started with the Good Shepherd Media Club Polling System, follow these st
 
    https://github.com/gagkjayawardana/good-shepherd-polling-system.git
 
-   ### To get started with the Good Shepherd Media Club Polling System Front-End, follow these steps:
+### To get started with the Good Shepherd Media Club Polling System Front-End, follow these steps:
    
-   1. Install dependencies:
+1. Install dependencies:
 
    npm install
 
